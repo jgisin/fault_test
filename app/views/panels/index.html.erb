@@ -5,6 +5,7 @@
 <table>
   <thead>
     <tr>
+      <th>Panel Name</th>
       <th>Wire length</th>
       <th>Init fault</th>
       <th>Runs</th>
@@ -17,6 +18,7 @@
   <tbody>
     <% @panels.each do |panel| %>
       <tr>
+        <td><%= panel.panel_name %></td>
         <td><%= panel.wire_length %></td>
         <td><%= panel.init_fault %></td>
         <td><%= panel.runs %></td>

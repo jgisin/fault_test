@@ -14,6 +14,7 @@
 ActiveRecord::Schema.define(version: 20151003031649) do
 
   create_table "panels", force: :cascade do |t|
+    t.string   "panel_name"
     t.float    "wire_length"
     t.float    "init_fault"
     t.float    "runs"
