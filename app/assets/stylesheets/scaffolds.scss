@@ -1,6 +1,4 @@
-  table {
-    min-width: 500px;
-  }
+
 
 body {
   background-color: #fff;
@@ -9,7 +7,18 @@ body {
   font-size: 13px;
   line-height: 18px;
 }
+table {
+    min-width: 700px;
+}
 
+td {
+  text-align: center;
+}
+
+h1 {
+  height: 2em; padding-top: 1em; text-align: center;
+  background: #993120; color: #ffffff; 
+}
 p, ol, ul, td {
   font-family: verdana, arial, helvetica, sans-serif;
   font-size: 13px;
@@ -31,7 +40,7 @@ a {
 
   &:hover {
     color: #fff;
-    background-color: #000;
+    background-color: #993120;
   }
 }
 
