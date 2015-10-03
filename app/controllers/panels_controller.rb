@@ -5,6 +5,12 @@ class PanelsController < ApplicationController
   # GET /panels.json
   def index
     @panels = Panel.all
+      @panels.each do |panel|
+      panel.f_value = (1.73 * panel.wire_length * panel.init_fault)/
+      (panel.runs * panel.c_value * panel.voltage)
+      panel.m_value = 1/(1+panel.f_value)
+      panel.final_value = panel.init_fault * panel.m_value
+    end
   end
 
   # GET /panels/1
@@ -25,7 +31,7 @@ class PanelsController < ApplicationController
   # POST /panels.json
   def create
     @panel = Panel.new(panel_params)
-
+    panel_calcs
     respond_to do |format|
       if @panel.save
         format.html { redirect_to @panel, notice: 'Panel was successfully created.' }
@@ -41,6 +47,7 @@ class PanelsController < ApplicationController
   # PATCH/PUT /panels/1.json
   def update
     respond_to do |format|
+    panel_calcs
       if @panel.update(panel_params)
         format.html { redirect_to @panel, notice: 'Panel was successfully updated.' }
         format.json { render :show, status: :ok, location: @panel }
@@ -67,8 +74,16 @@ class PanelsController < ApplicationController
       @panel = Panel.find(params[:id])
     end
 
+    def panel_calcs
+    @panel.f_value = (1.73 * @panel.wire_length * @panel.init_fault)/
+    (@panel.runs * @panel.c_value * @panel.voltage)
+    @panel.m_value = 1/(1+@panel.f_value)
+    @panel.final_value = @panel.init_fault * @panel.m_value
+    end
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def panel_params
-      params.require(:panel).permit(:wire_length, :init_fault, :runs, :voltage, :c_value, :panel_name)
+      params.require(:panel).permit(:wire_length, :init_fault, :runs, :voltage, :c_value, :panel_name,
+        :f_value, :m_value, :final_value)
     end
 end

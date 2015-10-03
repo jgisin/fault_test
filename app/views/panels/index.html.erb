@@ -1,7 +1,8 @@
+<% @page_title = "Index" %>
 <p id="notice"><%= notice %></p>
 
 <h1>Listing Panels</h1>
-
+<h2>Panel Values</h2>
 <table>
   <thead>
     <tr>
@@ -32,6 +33,28 @@
   </tbody>
 </table>
 
+<h2>Results</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Panel Name</th>
+      <th>F Value</th>
+      <th>M Value</th>
+      <th>Final Value</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @panels.each do |panel| %>
+      <tr>
+        <td><%= panel.panel_name %></td>
+        <td><%= number_with_precision(panel.f_value, precision: 2) %></td>
+        <td><%= number_with_precision(panel.m_value, precision: 2) %></td>
+        <td><%= number_with_precision(panel.final_value, precision: 2) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
 <br>
 
-<%= link_to 'New Panel', new_panel_path %>
+<b><%= link_to 'New Panel', new_panel_path %></b>

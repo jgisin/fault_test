@@ -20,6 +20,9 @@ ActiveRecord::Schema.define(version: 20151003031649) do
     t.float    "runs"
     t.float    "voltage"
     t.float    "c_value"
+    t.float    "f_value"
+    t.float    "m_value"
+    t.float    "final_value"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end

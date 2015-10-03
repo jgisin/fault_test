@@ -7,6 +7,9 @@ class CreatePanels < ActiveRecord::Migration
       t.float :runs
       t.float :voltage
       t.float :c_value
+      t.float :f_value
+      t.float :m_value
+      t.float :final_value
 
       t.timestamps null: false
     end
