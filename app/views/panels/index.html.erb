@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Panels</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Wire length</th>
+      <th>Init fault</th>
+      <th>Runs</th>
+      <th>Voltage</th>
+      <th>C value</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @panels.each do |panel| %>
+      <tr>
+        <td><%= panel.wire_length %></td>
+        <td><%= panel.init_fault %></td>
+        <td><%= panel.runs %></td>
+        <td><%= panel.voltage %></td>
+        <td><%= panel.c_value %></td>
+        <td><%= link_to 'Show', panel %></td>
+        <td><%= link_to 'Edit', edit_panel_path(panel) %></td>
+        <td><%= link_to 'Destroy', panel, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Panel', new_panel_path %>

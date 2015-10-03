@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  wire_length: 1.5
+  init_fault: 1.5
+  runs: 1.5
+  voltage: 1.5
+  c_value: 1.5
+
+two:
+  wire_length: 1.5
+  init_fault: 1.5
+  runs: 1.5
+  voltage: 1.5
+  c_value: 1.5

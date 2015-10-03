@@ -1,0 +1,37 @@
+<%= form_for(@panel) do |f| %>
+  <% if @panel.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@panel.errors.count, "error") %> prohibited this panel from being saved:</h2>
+
+      <ul>
+      <% @panel.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :wire_length %><br>
+    <%= f.text_field :wire_length %>
+  </div>
+  <div class="field">
+    <%= f.label :init_fault %><br>
+    <%= f.text_field :init_fault %>
+  </div>
+  <div class="field">
+    <%= f.label :runs %><br>
+    <%= f.text_field :runs %>
+  </div>
+  <div class="field">
+    <%= f.label :voltage %><br>
+    <%= f.text_field :voltage %>
+  </div>
+  <div class="field">
+    <%= f.label :c_value %><br>
+    <%= f.text_field :c_value %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

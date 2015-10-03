@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Wire length:</strong>
+  <%= @panel.wire_length %>
+</p>
+
+<p>
+  <strong>Init fault:</strong>
+  <%= @panel.init_fault %>
+</p>
+
+<p>
+  <strong>Runs:</strong>
+  <%= @panel.runs %>
+</p>
+
+<p>
+  <strong>Voltage:</strong>
+  <%= @panel.voltage %>
+</p>
+
+<p>
+  <strong>C value:</strong>
+  <%= @panel.c_value %>
+</p>
+
+<%= link_to 'Edit', edit_panel_path(@panel) %> |
+<%= link_to 'Back', panels_path %>
