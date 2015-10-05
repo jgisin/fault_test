@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :projects
   root 'panels#index'
   resources :panels
   #match ':controller(/:action(/:id))', :via => [:get, :post]

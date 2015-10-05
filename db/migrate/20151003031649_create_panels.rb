@@ -10,8 +10,13 @@ class CreatePanels < ActiveRecord::Migration
       t.float :f_value
       t.float :m_value
       t.float :final_value
+      t.integer :project_id
+
 
       t.timestamps null: false
     end
+
+
+
   end
 end

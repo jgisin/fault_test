@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151003031649) do
+ActiveRecord::Schema.define(version: 20151005155655) do
 
   create_table "panels", force: :cascade do |t|
     t.string   "panel_name"
@@ -23,8 +23,16 @@ ActiveRecord::Schema.define(version: 20151003031649) do
     t.float    "f_value"
     t.float    "m_value"
     t.float    "final_value"
+    t.integer  "project_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+  end
+
+  create_table "projects", force: :cascade do |t|
+    t.string   "name"
+    t.string   "notes"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end

@@ -84,6 +84,6 @@ class PanelsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def panel_params
       params.require(:panel).permit(:wire_length, :init_fault, :runs, :voltage, :c_value, :panel_name,
-        :f_value, :m_value, :final_value)
+        :f_value, :m_value, :final_value, :project_id)
     end
 end
