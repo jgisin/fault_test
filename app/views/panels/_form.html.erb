@@ -13,14 +13,14 @@
 
   <div class="field">
     <%= f.label :panel_name %><br>
-    <%= f.text_field :panel_name %>
+    <%= f.text_field :panel_name, :size => 40 %>
   </div>
   <div class="field">
     <%= f.label :wire_length %><br>
     <%= f.text_field :wire_length %>
   </div>
   <div class="field">
-    <%= f.label :init_fault %><br>
+    <%= f.label :init_fault, "Initial Fault Value" %><br>
     <%= f.text_field :init_fault %>
   </div>
   <div class="field">
@@ -37,7 +37,7 @@
   </div>
     <div class="field">
     <%= f.label :project_id %><br>
-    <%= f.text_field :project_id %>
+    <%= f.select :project_id, Project.all.map {|p| [p.name, p.id]} %>
   </div>
   <div class="actions">
     <%= f.submit %>

@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
+  root 'projects#index'
   resources :projects
-  root 'panels#index'
   resources :panels
   #match ':controller(/:action(/:id))', :via => [:get, :post]
   # The priority is based upon order of creation: first created -> highest priority.
