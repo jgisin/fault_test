@@ -1,6 +1,6 @@
 <% @page_title = "Details" %>
 <h1>Panel Details</h1>
-<p id="notice"><%= notice %></p>
+<p class="notice"><%= notice %></p>
 
 <p>
   <strong>Panel Name:</strong>
@@ -38,4 +38,4 @@
 </p>
 
 <%= link_to 'Edit', edit_panel_path(@panel) %> |
-<%= link_to 'Back', panels_path %>
+<%= link_to("Back to Panels", :action => 'index', :project_id => @panel.project_id) %>

@@ -1,11 +1,12 @@
 class PanelsController < ApplicationController
-  before_action :set_panel, only: [:show, :edit, :update, :destroy]
+  before_action :get_project
   before_action :confirm_logged_in
+  before_action :set_panel, only: [:show, :edit, :update, :destroy]
 
   # GET /panels
   # GET /panels.json
   def index
-    @panels = Panel.all
+    @panels = @project.panels
       @panels.each do |panel|
       panel.f_value = (1.73 * panel.wire_length * panel.init_fault)/
       (panel.runs * panel.c_value * panel.voltage)
@@ -21,7 +22,7 @@ class PanelsController < ApplicationController
 
   # GET /panels/new
   def new
-    @panel = Panel.new
+    @panel = Panel.new({:project_id => @project.id})
   end
 
   # GET /panels/1/edit
@@ -35,7 +36,7 @@ class PanelsController < ApplicationController
     panel_calcs
     respond_to do |format|
       if @panel.save
-        format.html { redirect_to @panel, notice: 'Panel was successfully created.' }
+        format.html { redirect_to @panel, notice: 'Panel was successfully created.'}
         format.json { render :show, status: :created, location: @panel }
       else
         format.html { render :new }
@@ -59,14 +60,14 @@ class PanelsController < ApplicationController
     end
   end
 
+  def delete
+  end
   # DELETE /panels/1
   # DELETE /panels/1.json
   def destroy
     @panel.destroy
-    respond_to do |format|
-      format.html { redirect_to panels_url, notice: 'Panel was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    flash[:notice] = "Panel '#{@panel.panel_name}' has been destroyed successfully"
+    redirect_to(:action => 'index', :project_id => @panel.project_id)
   end
 
   private
@@ -80,6 +81,12 @@ class PanelsController < ApplicationController
     (@panel.runs * @panel.c_value * @panel.voltage)
     @panel.m_value = 1/(1+@panel.f_value)
     @panel.final_value = @panel.init_fault * @panel.m_value
+    end
+
+    def get_project
+      if params[:project_id]
+        @project = Project.find(params[:project_id])
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

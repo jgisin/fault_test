@@ -1,7 +1,8 @@
-<% @page_title = "Index" %>
-<p id="notice"><%= notice %></p>
 
 <h1>Listing Panels</h1>
+<%= link_to("Back to Projects", :controller => 'projects', :action => 'index') %>
+<% @page_title = "Index" %>
+<p class="notice"><%= notice %></p>
 <h2>Panel Values</h2>
 <table>
   <thead>
@@ -57,4 +58,5 @@
 </table>
 <br>
 
-<b><%= link_to 'New Panel', new_panel_path %></b>
+
+<%= link_to("New Panel", {:action => 'new', :project_id => @project.id}, :class => 'action new') %>
