@@ -1,4 +1,4 @@
-<p id="notice"><%= notice %></p>
+<p class="notice"><%= notice %></p>
 
 <p>
   <strong>Name:</strong>
@@ -11,4 +11,4 @@
 </p>
 
 <%= link_to 'Edit', edit_project_path(@project) %> |
-<%= link_to 'Back', projects_path %>
+<%= link_to("Back to Projects", :action => 'index', :user_id => @project.user_id) %>

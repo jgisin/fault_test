@@ -1,11 +1,12 @@
 class ProjectsController < ApplicationController
   before_action :set_project, only: [:show, :edit, :update, :destroy]
   before_action :confirm_logged_in
+  before_action :get_user
 
   # GET /projects
   # GET /projects.json
   def index
-    @projects = Project.all
+    @projects = @user.projects
   end
 
   # GET /projects/1
@@ -15,7 +16,7 @@ class ProjectsController < ApplicationController
 
   # GET /projects/new
   def new
-    @project = Project.new
+    @project = Project.new({:user_id => @user.id})
   end
 
   # GET /projects/1/edit
@@ -56,10 +57,8 @@ class ProjectsController < ApplicationController
   # DELETE /projects/1.json
   def destroy
     @project.destroy
-    respond_to do |format|
-      format.html { redirect_to projects_url, notice: 'Project was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    flash[:notice] = "Project '#{@project.name}' has been destroyed successfully"
+    redirect_to(:action => 'index', :user_id => @project.user_id)
   end
 
   private
@@ -68,8 +67,9 @@ class ProjectsController < ApplicationController
       @project = Project.find(params[:id])
     end
 
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def project_params
-      params.require(:project).permit(:name, :notes)
+      params.require(:project).permit(:name, :notes, :user_id)
     end
 end

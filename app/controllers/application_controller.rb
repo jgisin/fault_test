@@ -15,4 +15,16 @@ class ApplicationController < ActionController::Base
     end
   end
 
+    def get_user
+      if params[:user_id]
+        @user = User.find(params[:user_id])
+      end
+    end
+
+        def get_project
+      if params[:project_id]
+        @project = Project.find(params[:project_id])
+      end
+    end
+    
 end

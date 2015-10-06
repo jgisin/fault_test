@@ -1,4 +1,4 @@
-<p id="notice"><%= notice %></p>
+<p class="notice"><%= notice %></p>
 
 <h1>Listing Projects</h1>
 <%= link_to("Back to Admin", :controller => 'access', :action => 'index') %>
@@ -20,7 +20,7 @@
         <td><%= project.notes %></td>
         <td><%= project.panels.count %>
         <td><%= link_to("View Panels", :controller => 'panels', :action => 'index', 
-        :project_id => project.id) %></td>
+        :project_id => project.id, :user_id => project.user_id) %></td>
         <td><%= link_to 'Show', project %></td>
         <td><%= link_to 'Edit', edit_project_path(project) %></td>
         <td><%= link_to 'Destroy', project, method: :delete, data: { confirm: 'Are you sure?' } %></td>
@@ -31,4 +31,4 @@
 
 <br>
 
-<%= link_to 'New Project', new_project_path %>
+<%= link_to("New Project", {:action => 'new', :user_id => @user.id}, :class => 'action new') %>

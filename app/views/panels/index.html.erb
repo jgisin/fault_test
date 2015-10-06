@@ -1,6 +1,7 @@
 
 <h1>Listing Panels</h1>
-<%= link_to("Back to Projects", :controller => 'projects', :action => 'index') %>
+<%= link_to("Back to Projects", :controller => 'projects', :action => 'index',
+:user_id => @project.user_id) %>
 <% @page_title = "Index" %>
 <p class="notice"><%= notice %></p>
 <h2>Panel Values</h2>

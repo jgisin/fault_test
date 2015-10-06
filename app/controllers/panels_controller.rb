@@ -1,5 +1,6 @@
 class PanelsController < ApplicationController
   before_action :get_project
+  before_action :get_user
   before_action :confirm_logged_in
   before_action :set_panel, only: [:show, :edit, :update, :destroy]
 
@@ -83,11 +84,7 @@ class PanelsController < ApplicationController
     @panel.final_value = @panel.init_fault * @panel.m_value
     end
 
-    def get_project
-      if params[:project_id]
-        @project = Project.find(params[:project_id])
-      end
-    end
+
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def panel_params

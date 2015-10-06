@@ -18,8 +18,8 @@ before_action :confirm_logged_in, :except => [:login, :attempt_login, :logout]
   	if authorized_user
       session[:user_id] = authorized_user.id
       session[:user_name] = authorized_user.user_name
-  		flash[:notice] = "Your are now logged in."
-  		redirect_to(:action=> 'index')
+  		flash[:notice] = "Your are now logged in as #{authorized_user.user_name.upcase}."
+  		redirect_to(:controller => 'projects', :action => 'index', :user_id => authorized_user.id)
   	else
   		flash[:notice] = "Invalid username/password combination."
   		redirect_to(:action => 'login')

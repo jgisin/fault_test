@@ -1,13 +1,12 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Users</h1>
+<h1>Account</h1>
 <%= link_to("Back to Admin", :controller => 'access', :action => 'index') %>
 <br />
 <table>
   <thead>
     <tr>
       <th>User name</th>
-      <th>Password digest</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -16,7 +15,8 @@
     <% @users.each do |user| %>
       <tr>
         <td><%= user.user_name %></td>
-        <td><%= user.password_digest %></td>
+        <td><%= link_to("View Projects", :controller => 'projects', :action => 'index', 
+            :user_id => user.id) %></td>
         <td><%= link_to 'Show', user %></td>
         <td><%= link_to 'Edit', edit_user_path(user) %></td>
         <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
