@@ -31,8 +31,9 @@ p, ol, ul, td {
   font-size: 13px;
   line-height: 18px;
 }
-#footer { clear: both; height: 2.5em; text-align: righ; 
-  background: #4C2516; color: #F2DC87; }
+#footer { clear: both; height: 2.5em; text-align: left; 
+  background: #4C2516; color: #F2DC87; position: absolute;
+  bottom: 0; width: 100% }
 #footer p { margin: 0; padding: 0.5em 1em; }
 pre {
   background-color: #eee;

@@ -3,8 +3,8 @@
 
 
 <div class="menu">
-	<h2>Admin Menu</h2>
-	<div class="identity">Logged in as:</div>
+	<h1>Admin Menu</h1>
+	<div class="identity">Logged in as: <%= session[:user_name] %></div>
 	<ul>
 		<li><%= link_to("Login", :controller => 'access', :action => 'login') %></li>
 		<li><%= link_to("Manage Users", :controller => 'users') %></li>

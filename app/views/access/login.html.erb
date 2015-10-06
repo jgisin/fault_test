@@ -1,19 +1,19 @@
 <% @page_title = "Admin Login" %>
-
+<h1>Login</h1>
 			<% if !flash[:notice].blank? %>
 		<div class="notice">
 			<%= flash[:notice] %>
 		</div>
-					<% end %>
+		<% end %>				
 <div class="login">
 	<%= form_tag(:action => 'attempt_login') do %>
 	<table>
 		<tr>
-			<td><%= label_tag(:user_name) %></td>
+			<td><b><%= label_tag(:user_name) %></b></td>
 			<td><%= text_field_tag(:user_name) %></td>
 		</tr>
 		<tr>
-			<td><%= label_tag(:password) %></td>
+			<td><b><%= label_tag(:password) %></b></td>
 			<td><%= password_field_tag(:password) %></td>
 		</tr>
 		<tr>
