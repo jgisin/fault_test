@@ -2,6 +2,7 @@ class CreatePanels < ActiveRecord::Migration
   def change
     create_table :panels do |t|
       t.string :panel_name
+      t.integer :position
       t.float :wire_length
       t.float :init_fault
       t.float :runs

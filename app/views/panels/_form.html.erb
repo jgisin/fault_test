@@ -39,6 +39,10 @@
     <%= f.label :project_id %><br>
     <%= f.select :project_id, Project.all.map {|p| [p.name, p.id]} %>
   </div>
+      <div class="field">
+    <%= f.label :position %><br>
+   <%= f.select :position, 1..@panel_count %>
+  </div>
   <div class="actions">
     <%= f.submit %>
   </div>

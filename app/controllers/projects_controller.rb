@@ -6,7 +6,7 @@ class ProjectsController < ApplicationController
   # GET /projects
   # GET /projects.json
   def index
-    @projects = @user.projects
+    @projects = @user.projects.sorted
   end
 
   # GET /projects/1
@@ -17,10 +17,12 @@ class ProjectsController < ApplicationController
   # GET /projects/new
   def new
     @project = Project.new({:user_id => @user.id})
+    @project_count = Project.count + 1
   end
 
   # GET /projects/1/edit
   def edit
+    @project_count = Project.count
   end
 
   # POST /projects

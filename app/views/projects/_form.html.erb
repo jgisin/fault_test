@@ -23,7 +23,12 @@
     <%= f.label :user_id %><br>
    <%= f.select :user_id, User.all.map {|p| [p.user_name, p.id]} %>
   </div>
+  <div class="field">
+    <%= f.label :position %><br>
+   <%= f.select :position, 1..@project_count %>
+  </div>
   <div class="actions">
     <%= f.submit %>
   </div>
+
 <% end %>

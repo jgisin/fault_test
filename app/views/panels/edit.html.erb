@@ -4,4 +4,5 @@
 <%= render 'form' %>
 
 <%= link_to 'Show', @panel %> |
-<%= link_to 'Back', panels_path %>
+<%= link_to("Back to Panels", :controller => 'panels', :action => 'index',
+ :project_id => @panel.project_id) %>

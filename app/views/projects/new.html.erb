@@ -2,4 +2,4 @@
 
 <%= render 'form' %>
 
-<%= link_to 'Back', projects_path %>
+<%= link_to("Back to Projects", :action => 'index', :user_id => @project.user_id) %>

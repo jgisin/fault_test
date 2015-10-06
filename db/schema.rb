@@ -15,6 +15,7 @@ ActiveRecord::Schema.define(version: 20151005230816) do
 
   create_table "panels", force: :cascade do |t|
     t.string   "panel_name"
+    t.integer  "position"
     t.float    "wire_length"
     t.float    "init_fault"
     t.float    "runs"
@@ -31,6 +32,7 @@ ActiveRecord::Schema.define(version: 20151005230816) do
   create_table "projects", force: :cascade do |t|
     t.string   "name"
     t.string   "notes"
+    t.integer  "position"
     t.integer  "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

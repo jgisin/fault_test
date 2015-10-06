@@ -7,7 +7,7 @@ class PanelsController < ApplicationController
   # GET /panels
   # GET /panels.json
   def index
-    @panels = @project.panels
+    @panels = @project.panels.sorted
       @panels.each do |panel|
       panel.f_value = (1.73 * panel.wire_length * panel.init_fault)/
       (panel.runs * panel.c_value * panel.voltage)
@@ -24,10 +24,12 @@ class PanelsController < ApplicationController
   # GET /panels/new
   def new
     @panel = Panel.new({:project_id => @project.id})
+    @panel_count = Panel.count + 1
   end
 
   # GET /panels/1/edit
   def edit
+    @panel_count = Panel.count
   end
 
   # POST /panels
@@ -89,6 +91,6 @@ class PanelsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def panel_params
       params.require(:panel).permit(:wire_length, :init_fault, :runs, :voltage, :c_value, :panel_name,
-        :f_value, :m_value, :final_value, :project_id)
+        :f_value, :m_value, :final_value, :project_id, :position)
     end
 end
