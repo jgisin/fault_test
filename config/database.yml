@@ -5,6 +5,7 @@
 #   gem 'sqlite3'
 #
 default: &default
+  host: /tmp
   adapter: postgresql
   database: fault_current_development
   pool: 5

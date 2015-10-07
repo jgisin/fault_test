@@ -13,6 +13,9 @@
 
 ActiveRecord::Schema.define(version: 20151005230816) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "panels", force: :cascade do |t|
     t.string   "panel_name"
     t.integer  "position"
@@ -45,4 +48,6 @@ ActiveRecord::Schema.define(version: 20151005230816) do
     t.datetime "updated_at",      null: false
   end
 
+  add_foreign_key "panels", "projects"
+  add_foreign_key "projects", "users"
 end
