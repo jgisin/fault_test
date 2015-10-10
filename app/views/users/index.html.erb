@@ -1,9 +1,39 @@
-<p id="notice"><%= notice %></p>
+<p class="notice"><%= notice %></p>
 
-<h1>Account</h1>
-<%= link_to("Back to Admin", :controller => 'access', :action => 'index') %>
-<br />
-<table>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <p class="navbar-text">Currently logged in as: <b><%= session[:user_name].upcase %></b></p>
+        </div>
+                <div id="navbar" class="navbar-collapse collapse">
+                  <form class="navbar-form navbar-right">
+                    <div class="form-group">
+            <%= form_tag(:controller => 'access', :action => 'attempt_login') do %>
+            
+              <%= text_field_tag 'user_name', nil, class: "form-control", placeholder: "Username" %>
+            </div>
+            <div class="form-group">
+              <%= password_field_tag 'password', nil, class: "form-control", placeholder: "Password" %>
+            </div>
+            <%= submit_tag "Log In", class: "btn btn-success" %>
+              <% end %>
+          </form>
+        </div><!--/.navbar-collapse -->
+      </div>
+    </nav>
+<div class="jumbotron">
+  <div class="container">
+    <h1>Users</h1>
+  </div>
+</div>
+<div class="container">
+<%= link_to "New User", {action: "new"}, class: "btn btn-md btn-success" %>
+<%= link_to "Back to Admin", {controller: "access", action: "index"}, class: "btn btn-md btn-default" %>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-8">
+<table class="table table-hover">
   <thead>
     <tr>
       <th>User name</th>
@@ -15,16 +45,13 @@
     <% @users.each do |user| %>
       <tr>
         <td><%= user.user_name %></td>
-        <td><%= link_to("View Projects", :controller => 'projects', :action => 'index', 
-            :user_id => user.id) %></td>
-        <td><%= link_to 'Show', user %></td>
-        <td><%= link_to 'Edit', edit_user_path(user) %></td>
-        <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'View Projects', projects_path(:user_id => user.id), class: "btn btn-md btn-primary"  %></td>
+        <td><%= link_to 'Show', user, class: "btn btn-md btn-info" %></td>
+        <td><%= link_to 'Edit', edit_user_path(user), class: "btn btn-md btn-info" %></td>
+        <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-md btn-info" %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
-<br>
 
-<%= link_to 'New User', new_user_path %>

@@ -14,7 +14,9 @@
 							<%= password_field_tag 'password', nil, class: "form-control" %>	
 								<br>
 								<% if !flash[:notice].blank? %>
+								<div class="alert alert-danger fade in">
 								<%= flash[:notice] %>
+							</div>
 								<% end %>
 							<%= submit_tag "Log In", class: "btn btn-lg btn-primary btn-block" %>
 

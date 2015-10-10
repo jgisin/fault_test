@@ -25,13 +25,14 @@
 <div class="jumbotron">
   <div class="container">
     <div class="row">
-    <h1>Projects</h1>
+    <h1>Panels</h1>
   </div>
 </div>
 </div>
 <div class="container">
-<%= link_to("Back to Projects", :controller => 'projects', :action => 'index',
-:user_id => @project.user_id) %>
+<%= link_to "New Panel", {action: "new", project_id: @project.id}, class: "btn btn-md btn-success" %>
+<%= link_to "Back to Projects", {controller: "projects", action: "index",
+ user_id: @project.user_id}, class: "btn btn-md btn-default" %>
 </div>
 <div class="container">
   <div class="row">
@@ -58,9 +59,9 @@
         <td><%= panel.runs %></td>
         <td><%= panel.voltage %></td>
         <td><%= panel.c_value %></td>
-        <td><%= link_to 'Show', panel %></td>
-        <td><%= link_to 'Edit', edit_panel_path(panel) %></td>
-        <td><%= link_to 'Destroy', panel, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Show', panel, class: "btn btn-md btn-info" %></td>
+        <td><%= link_to 'Edit', edit_panel_path(panel), class: "btn btn-md btn-info" %></td>
+        <td><%= link_to 'Destroy', panel, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-md btn-info" %></td>
       </tr>
     <% end %>
   </tbody>
@@ -93,6 +94,4 @@
 </div>
 <br>
 
-<div class="container">
-<%= link_to("New Panel", {:action => 'new', :project_id => @project.id}, :class => 'action new') %>
-</div>
+

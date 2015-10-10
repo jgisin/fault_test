@@ -27,8 +27,9 @@
   </div>
 </div>
 <div class="container">
-<%= link_to("Back to Admin", :controller => 'access', :action => 'index') %>
-<br />
+<%= link_to "New Project", {action: "new", user_id: @user.id}, class: "btn btn-md btn-success" %>
+<%= link_to "Back to Admin", {controller: "access", action: "index",
+ user_id: @user.id}, class: "btn btn-md btn-default" %>
 </div>
 <div class="container">
   <div class="row">
@@ -49,11 +50,11 @@
         <td><%= project.name %></td>
         <td><%= project.notes %></td>
         <td><%= project.panels.count %>
-        <td><%= link_to("View Panels", :controller => 'panels', :action => 'index', 
-        :project_id => project.id, :user_id => project.user_id) %></td>
-        <td><%= link_to 'Show', project %></td>
-        <td><%= link_to 'Edit', edit_project_path(project) %></td>
-        <td><%= link_to 'Destroy', project, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'View Panels', panels_path(:project_id => project.id, :user_id => project.user.id), 
+        class: "btn btn-md btn-primary" %></td>
+        <td><%= link_to 'Show', project, class: "btn btn-md btn-info" %></td>
+        <td><%= link_to 'Edit', edit_project_path(project), class: "btn btn-md btn-info" %></td>
+        <td><%= link_to 'Destroy', project, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-md btn-info" %></td>
       </tr>
     <% end %>
   </tbody>
@@ -62,6 +63,3 @@
   </div>
 </div>
 <br>
-<div class="container">
-<%= link_to("New Project", {:action => 'new', :user_id => @user.id}, :class => 'action new') %>
-</div>
