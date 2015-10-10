@@ -9,10 +9,17 @@ class PanelsController < ApplicationController
   def index
     @panels = @project.panels.sorted
       @panels.each do |panel|
-      panel.f_value = (1.73 * panel.wire_length * panel.init_fault)/
-      (panel.runs * panel.c_value * panel.voltage)
-      panel.m_value = 1/(1+panel.f_value)
-      panel.final_value = panel.init_fault * panel.m_value
+        if panel.voltage == 208 || panel.voltage == 480
+          panel.f_value = (1.73 * panel.wire_length * panel.init_fault)/
+          (panel.runs * panel.c_value * panel.voltage)
+          panel.m_value = 1/(1+panel.f_value)
+          panel.final_value = panel.init_fault * panel.m_value
+      else
+          panel.f_value = (2 * panel.wire_length * panel.init_fault)/
+          (panel.runs * panel.c_value * panel.voltage)
+          panel.m_value = 1/(1+panel.f_value)
+          panel.final_value = panel.init_fault * panel.m_value
+      end
     end
   end
 
@@ -36,7 +43,11 @@ class PanelsController < ApplicationController
   # POST /panels.json
   def create
     @panel = Panel.new(panel_params)
-    panel_calcs
+    if @panel.voltage == 208 || @panel.voltage == 480
+    panel_calcs(1.73)
+  else
+    panel_calcs(2)
+  end
     respond_to do |format|
       if @panel.save
         format.html { redirect_to @panel, notice: 'Panel was successfully created.'}
@@ -52,7 +63,11 @@ class PanelsController < ApplicationController
   # PATCH/PUT /panels/1.json
   def update
     respond_to do |format|
-    panel_calcs
+      if @panel.voltage == 208 || @panel.voltage == 480
+    panel_calcs(1.73)
+    else
+      panel_calcs(2)
+    end
       if @panel.update(panel_params)
         format.html { redirect_to @panel, notice: 'Panel was successfully updated.' }
         format.json { render :show, status: :ok, location: @panel }
@@ -79,8 +94,8 @@ class PanelsController < ApplicationController
       @panel = Panel.find(params[:id])
     end
 
-    def panel_calcs
-    @panel.f_value = (1.73 * @panel.wire_length * @panel.init_fault)/
+    def panel_calcs(var_volt)
+    @panel.f_value = (var_volt * @panel.wire_length * @panel.init_fault)/
     (@panel.runs * @panel.c_value * @panel.voltage)
     @panel.m_value = 1/(1+@panel.f_value)
     @panel.final_value = @panel.init_fault * @panel.m_value
@@ -91,6 +106,6 @@ class PanelsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def panel_params
       params.require(:panel).permit(:wire_length, :init_fault, :runs, :voltage, :c_value, :panel_name,
-        :f_value, :m_value, :final_value, :project_id, :position)
+        :f_value, :m_value, :final_value, :project_id, :position, :wire_type, :conduit_type, :runs_type)
     end
 end

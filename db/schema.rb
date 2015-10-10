@@ -24,12 +24,15 @@ ActiveRecord::Schema.define(version: 20151005230816) do
     t.float    "runs"
     t.float    "voltage"
     t.float    "c_value"
+    t.integer  "wire_type"
+    t.integer  "conduit_type"
+    t.integer  "run_type"
     t.float    "f_value"
     t.float    "m_value"
     t.float    "final_value"
     t.integer  "project_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
   end
 
   create_table "projects", force: :cascade do |t|

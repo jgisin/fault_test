@@ -37,6 +37,7 @@
   <thead>
     <tr>
       <th>User name</th>
+      <th>Projects</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -45,6 +46,7 @@
     <% @users.each do |user| %>
       <tr>
         <td><%= user.user_name %></td>
+        <td><%= user.projects.count %></td>
         <td><%= link_to 'View Projects', projects_path(:user_id => user.id), class: "btn btn-md btn-primary"  %></td>
         <td><%= link_to 'Show', user, class: "btn btn-md btn-info" %></td>
         <td><%= link_to 'Edit', edit_user_path(user), class: "btn btn-md btn-info" %></td>
