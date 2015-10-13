@@ -58,8 +58,31 @@
 </p>
 
 <p>
-  <strong>Project ID:</strong>
-  <%= @panel.project_id %>
+  <strong>Wire Size:</strong>
+  <%= @panel.wire_size %>
+</p>
+
+<p>
+  <strong>Wire Type:</strong>
+  <% if @panel.wire_type == 1 %>
+    <%= "Copper" %>
+    <% else %>
+      <%= "Aluminum" %>
+  <% end %>
+</p>
+  <strong>Conduit Type:</strong>
+  <% if @panel.wire_type == 1 %>
+    <%= "Magnetic" %>
+    <% else %>
+      <%= "Non-Magnetic" %>
+  <% end %>
+</p>
+  <strong>Type of Run:</strong>
+  <% if @panel.wire_type == 1 %>
+    <%= "Three Single Conductors" %>
+    <% else %>
+      <%= "Three Conductor Cable" %>
+  <% end %>
 </p>
 <%= link_to 'Edit', edit_panel_path(@panel), class: "btn btn-md btn-success" %>    
 <%= link_to "Back to Panels", {controller: "panels", action: "index",

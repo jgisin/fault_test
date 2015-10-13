@@ -33,7 +33,7 @@
   </div>
   <div class="form-group">
     <%= f.label :voltage %><br>
-    <%= f.text_field :voltage %>
+    <%= f.select :voltage, [208, 240, 480], {}, {class: "form-control"} %>
   </div>
     <div class="form-group">
     <%= f.label :wire_size %><br>
@@ -58,7 +58,7 @@
             <%= f.radio_button :conduit_type, 2, {class: "form-control"} %>
       </div>
   </div>
-      <div class="col-sm-2">
+      <div class="col-sm-3">
         <div class="form-group">
             <%= f.label :run_type, "Three Single Conductors", :value => 1 %><br>
            <%= f.radio_button :run_type, 1,  {class: "form-control"} %>
