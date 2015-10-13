@@ -1,65 +1,51 @@
-<p class="notice"><%= notice %></p>
+<% @page_title = "Project Index" %>
 
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <p class="navbar-text">Currently logged in as: <b><%= session[:user_name].upcase %></b></p>
-        </div>
-                <div id="navbar" class="navbar-collapse collapse">
-                  <form class="navbar-form navbar-right">
-                    <div class="form-group">
-            <%= form_tag(:controller => 'access', :action => 'attempt_login') do %>
-            
-              <%= text_field_tag 'user_name', nil, class: "form-control", placeholder: "Username" %>
-            </div>
-            <div class="form-group">
-              <%= password_field_tag 'password', nil, class: "form-control", placeholder: "Password" %>
-            </div>
-            <%= submit_tag "Log In", class: "btn btn-success" %>
-              <% end %>
-          </form>
-        </div><!--/.navbar-collapse -->
-      </div>
-    </nav>
-<div class="jumbotron">
-  <div class="container">
-    <h1>Projects</h1>
-  </div>
+
+
+<h1><%= @page_title %></h1>
+</div>
+</div>
 </div>
 <div class="container">
-<%= link_to "New Project", {action: "new", user_id: @user.id}, class: "btn btn-md btn-success" %>
-<%= link_to "Back to Admin", {controller: "access", action: "index",
- user_id: @user.id}, class: "btn btn-md btn-default" %>
-</div>
-<div class="container">
+  <%= link_to "New Project", {action: "new", user_id: @user.id}, class: "btn btn-md btn-success" %>
+  <%= link_to "Back to Admin", {controller: "access", action: "index",
+   user_id: @user.id}, class: "btn btn-md btn-default" %>
+ </div>
+
+ <div class="container">
   <div class="row">
     <div class="col-lg-8">
-<table class="table table-hover">
-  <thead>
-    <tr>
-      <th data-field="name">Name</th>
-      <th>Notes</th>
-      <th>Panels</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th data-field="name">Name</th>
+            <th>Notes</th>
+            <th>Panels</th>
+            <th colspan="3"></th>
+          </tr>
+        </thead>
 
-  <tbody>
-    <% @projects.each do |project| %>
-      <tr>
-        <td><%= project.name %></td>
-        <td><%= project.notes %></td>
-        <td><%= project.panels.count %>
-        <td><%= link_to 'View Panels', panels_path(:project_id => project.id, :user_id => project.user.id), 
-        class: "btn btn-md btn-primary" %></td>
-        <td><%= link_to 'Show', project, class: "btn btn-md btn-info" %></td>
-        <td><%= link_to 'Edit', edit_project_path(project), class: "btn btn-md btn-info" %></td>
-        <td><%= link_to 'Destroy', project, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-md btn-info" %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+        <tbody>
+          <% @projects.each do |project| %>
+          <tr>
+            <td><%= project.name %></td>
+            <td><%= project.notes %></td>
+            <td><%= project.panels.count %>
+              <td><%= link_to 'View Panels', panels_path(:project_id => project.id, :user_id => project.user.id), 
+              class: "btn btn-md btn-primary" %></td>
+              <td><%= link_to 'Show', project, class: "btn btn-md btn-info" %></td>
+              <td><%= link_to 'Edit', edit_project_path(project), class: "btn btn-md btn-info" %></td>
+              <td><%= link_to 'Destroy', project, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-md btn-info" %></td>
+            </tr>
+            <% end %>
+          </tbody>
+        </table>
+        <% if !flash[:notice].blank? %>
+        <div class="alert alert-danger fade in">
+          <%= flash[:notice] %>
+        </div>
+        <% end %>
+      </div>
     </div>
   </div>
-</div>
-<br>
+  <br>

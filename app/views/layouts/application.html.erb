@@ -1,13 +1,33 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title> Fault Current | <%= @page_title || "Admin" %></title>
+  <title> <%= @page_title || "Admin" %></title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
 <body>
-
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <p class="navbar-text"><b></b></p>
+        </div>
+                <div id="navbar" class="navbar-collapse collapse">
+                  <form class="navbar-form navbar-right">
+                    <div class="form-group">
+                      <% if !session[:user_id].nil? %>
+                        <p class="navbar-text">Currently logged in as: <%= session[:user_name].upcase %> &nbsp;
+           <%= link_to "Logout", {controller: "access", action: "logout"}, 
+         class: "btn btn-md btn-success" %></p>
+              <% end %>
+          </form>
+        </div><!--/.navbar-collapse -->
+      </div>
+    </nav>
+<div class="jumbotron">
+  <div class="container">
+    <div class="row">
+    	<br>
 <%= yield %>
 
 	<div id="footer">

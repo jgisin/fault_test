@@ -220,6 +220,114 @@ class PanelsController < ApplicationController
     elsif wire_type == 2 && conduit_type == 2 && runs_type == 2
       return 2353
     end
+    when "3"
+     if wire_type == 1 && conduit_type == 1 && runs_type == 1
+      return 4774
+    elsif wire_type == 1 && conduit_type == 1 && runs_type == 2
+      return 4820
+    elsif wire_type == 1 && conduit_type == 2 && runs_type == 1
+      return 4811
+    elsif wire_type == 1 && conduit_type == 2 && runs_type == 2
+      return 4833
+    elsif wire_type == 2 && conduit_type == 1 && runs_type == 1
+      return 2952
+    elsif wire_type == 2 && conduit_type == 1 && runs_type == 2
+      return 2963
+    elsif wire_type == 2 && conduit_type == 2 && runs_type == 1
+      return 2961
+    elsif wire_type == 2 && conduit_type == 2 && runs_type == 2
+      return 2966
+    end
+    when "2"
+     if wire_type == 1 && conduit_type == 1 && runs_type == 1
+      return 5907
+    elsif wire_type == 1 && conduit_type == 1 && runs_type == 2
+      return 5989
+    elsif wire_type == 1 && conduit_type == 2 && runs_type == 1
+      return 6044
+    elsif wire_type == 1 && conduit_type == 2 && runs_type == 2
+      return 6087
+    elsif wire_type == 2 && conduit_type == 1 && runs_type == 1
+      return 3713
+    elsif wire_type == 2 && conduit_type == 1 && runs_type == 2
+      return 3734
+    elsif wire_type == 2 && conduit_type == 2 && runs_type == 1
+      return 3730
+    elsif wire_type == 2 && conduit_type == 2 && runs_type == 2
+      return 3740
+    end
+    when "1"
+     if wire_type == 1 && conduit_type == 1 && runs_type == 1
+      return 7263
+    elsif wire_type == 1 && conduit_type == 1 && runs_type == 2
+      return 7454
+    elsif wire_type == 1 && conduit_type == 2 && runs_type == 1
+      return 7493
+    elsif wire_type == 1 && conduit_type == 2 && runs_type == 2
+      return 7579
+    elsif wire_type == 2 && conduit_type == 1 && runs_type == 1
+      return 4645
+    elsif wire_type == 2 && conduit_type == 1 && runs_type == 2
+      return 4686
+    elsif wire_type == 2 && conduit_type == 2 && runs_type == 1
+      return 4678
+    elsif wire_type == 2 && conduit_type == 2 && runs_type == 2
+      return 4699
+    end
+    when "1/0"
+     if wire_type == 1 && conduit_type == 1 && runs_type == 1
+      return 8925
+    elsif wire_type == 1 && conduit_type == 1 && runs_type == 2
+      return 9210
+    elsif wire_type == 1 && conduit_type == 2 && runs_type == 1
+      return 9317
+    elsif wire_type == 1 && conduit_type == 2 && runs_type == 2
+      return 9473
+    elsif wire_type == 2 && conduit_type == 1 && runs_type == 1
+      return 5777
+    elsif wire_type == 2 && conduit_type == 1 && runs_type == 2
+      return 5852
+    elsif wire_type == 2 && conduit_type == 2 && runs_type == 1
+      return 5838
+    elsif wire_type == 2 && conduit_type == 2 && runs_type == 2
+      return 5876
+    end
+    when "2/0"
+     if wire_type == 1 && conduit_type == 1 && runs_type == 1
+      return 10755
+    elsif wire_type == 1 && conduit_type == 1 && runs_type == 2
+      return 11245
+    elsif wire_type == 1 && conduit_type == 2 && runs_type == 1
+      return 11424
+    elsif wire_type == 1 && conduit_type == 2 && runs_type == 2
+      return 11703
+    elsif wire_type == 2 && conduit_type == 1 && runs_type == 1
+      return 7187
+    elsif wire_type == 2 && conduit_type == 1 && runs_type == 2
+      return 7327
+    elsif wire_type == 2 && conduit_type == 2 && runs_type == 1
+      return 7301
+    elsif wire_type == 2 && conduit_type == 2 && runs_type == 2
+      return 7373
+    end
+    when "3/0"
+     if wire_type == 1 && conduit_type == 1 && runs_type == 1
+      return 12844
+    elsif wire_type == 1 && conduit_type == 1 && runs_type == 2
+      return 13656
+    elsif wire_type == 1 && conduit_type == 2 && runs_type == 1
+      return 13923
+    elsif wire_type == 1 && conduit_type == 2 && runs_type == 2
+      return 14410
+    elsif wire_type == 2 && conduit_type == 1 && runs_type == 1
+      return 8826
+    elsif wire_type == 2 && conduit_type == 1 && runs_type == 2
+      return 9077
+    elsif wire_type == 2 && conduit_type == 2 && runs_type == 1
+      return 9110
+    elsif wire_type == 2 && conduit_type == 2 && runs_type == 2
+      return 9243
+    end
   end
 end
 
