@@ -8,11 +8,12 @@ class CreatePanels < ActiveRecord::Migration
       t.float :init_fault
       t.float :runs
       t.float :voltage
-      t.float :c_value
+      t.string :wire_size
       t.integer :wire_type
       t.integer :conduit_type
       t.integer :run_type
       #Result Variables
+      t.float :c_value
       t.float :f_value
       t.float :m_value
       t.float :final_value

@@ -35,27 +35,35 @@
     <%= f.label :voltage %><br>
     <%= f.text_field :voltage %>
   </div>
-  <div class="form-group">
-    <%= f.label :c_value %><br>
-    <%= f.text_field :c_value %>
+    <div class="form-group">
+    <%= f.label :wire_size %><br>
+    <%= f.select :wire_size, ["14", "12", "10", "8", "6", "4"], {}, {class: "form-control"} %>
   </div>
   </div>
 </div>
     <div class="row">
-      <div class="col-lg-2">
+      <div class="col-sm-2">
         <div class="form-group">
             <%= f.label :wire_type, "Copper", :value => 1 %><br>
-           <%= f.radio_button :wire_type, 1,  {class: "form-control", :checked => true} %>
+           <%= f.radio_button :wire_type, 1,  {class: "form-control"} %>
             <%= f.label :wire_type, "Aluminum", :value => 2 %><br>
-            <%= f.radio_button :wire_type, 1, {class: "form-control"} %>
+            <%= f.radio_button :wire_type, 2, {class: "form-control"} %>
         </div>
       </div>
       <div class="col-sm-2">
         <div class="form-group">
             <%= f.label :conduit_type, "Magnetic", :value => 1 %><br>
-           <%= f.radio_button :conduit_type, 1,  {class: "form-control", :checked => true} %>
+           <%= f.radio_button :conduit_type, 1,  {class: "form-control"} %>
             <%= f.label :conduit_type, "Non-Magnetic", :value => 2 %><br>
-            <%= f.radio_button :conduit_type, 1, {class: "form-control"} %>
+            <%= f.radio_button :conduit_type, 2, {class: "form-control"} %>
+      </div>
+  </div>
+      <div class="col-sm-2">
+        <div class="form-group">
+            <%= f.label :run_type, "Three Single Conductors", :value => 1 %><br>
+           <%= f.radio_button :run_type, 1,  {class: "form-control"} %>
+            <%= f.label :run_type, "Three Conductor Cable", :value => 2 %><br>
+            <%= f.radio_button :run_type, 2, {class: "form-control"} %>
       </div>
   </div>
 </div>
@@ -66,6 +74,7 @@
            <%= f.select :position, 1..@panel_count, {}, {class: "form-control"} %>
         </div>
         <div class="form-group">
+          <%= f.hidden_field :project_id, :value => @panel.project_id %>
           <%= f.submit 'Submit', {:class => 'btn btn-md btn-success'} %>       
           <%= link_to "Back to Panels", {controller: "panels", action: "index",
             project_id: @panel.project_id}, class: "btn btn-md btn-default" %>

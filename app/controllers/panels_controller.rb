@@ -8,17 +8,19 @@ class PanelsController < ApplicationController
   # GET /panels.json
   def index
     @panels = @project.panels.sorted
-      @panels.each do |panel|
-        if panel.voltage == 208 || panel.voltage == 480
-          panel.f_value = (1.73 * panel.wire_length * panel.init_fault)/
-          (panel.runs * panel.c_value * panel.voltage)
-          panel.m_value = 1/(1+panel.f_value)
-          panel.final_value = panel.init_fault * panel.m_value
+    @panels.each do |panel|
+      panel.c_value = c_val_picker(panel.wire_size, panel.wire_type, 
+          panel.conduit_type, panel.run_type)
+      if panel.voltage == 208 || panel.voltage == 480
+        panel.f_value = (1.73 * panel.wire_length * panel.init_fault)/
+        (panel.runs * panel.c_value * panel.voltage)
+        panel.m_value = 1/(1+panel.f_value)
+        panel.final_value = panel.init_fault * panel.m_value
       else
-          panel.f_value = (2 * panel.wire_length * panel.init_fault)/
-          (panel.runs * panel.c_value * panel.voltage)
-          panel.m_value = 1/(1+panel.f_value)
-          panel.final_value = panel.init_fault * panel.m_value
+        panel.f_value = (2 * panel.wire_length * panel.init_fault)/
+        (panel.runs * panel.c_value * panel.voltage)
+        panel.m_value = 1/(1+panel.f_value)
+        panel.final_value = panel.init_fault * panel.m_value
       end
     end
   end
@@ -43,11 +45,13 @@ class PanelsController < ApplicationController
   # POST /panels.json
   def create
     @panel = Panel.new(panel_params)
+    @panel.c_value = c_val_picker(@panel.wire_size, @panel.wire_type, 
+          @panel.conduit_type, @panel.run_type)
     if @panel.voltage == 208 || @panel.voltage == 480
-    panel_calcs(1.73)
-  else
-    panel_calcs(2)
-  end
+      panel_calcs(1.73)
+    else
+      panel_calcs(2)
+    end
     respond_to do |format|
       if @panel.save
         format.html { redirect_to @panel, notice: 'Panel was successfully created.'}
@@ -62,13 +66,17 @@ class PanelsController < ApplicationController
   # PATCH/PUT /panels/1
   # PATCH/PUT /panels/1.json
   def update
+
     respond_to do |format|
-      if @panel.voltage == 208 || @panel.voltage == 480
-    panel_calcs(1.73)
-    else
-      panel_calcs(2)
-    end
+
       if @panel.update(panel_params)
+          @panel.c_value = c_val_picker(@panel.wire_size, @panel.wire_type, 
+          @panel.conduit_type, @panel.run_type)
+        if @panel.voltage == 208 || @panel.voltage == 480
+          panel_calcs(1.73)
+        else
+          panel_calcs(2)
+        end
         format.html { redirect_to @panel, notice: 'Panel was successfully updated.' }
         format.json { render :show, status: :ok, location: @panel }
       else
@@ -95,17 +103,130 @@ class PanelsController < ApplicationController
     end
 
     def panel_calcs(var_volt)
-    @panel.f_value = (var_volt * @panel.wire_length * @panel.init_fault)/
-    (@panel.runs * @panel.c_value * @panel.voltage)
-    @panel.m_value = 1/(1+@panel.f_value)
-    @panel.final_value = @panel.init_fault * @panel.m_value
+      @panel.f_value = (var_volt * @panel.wire_length * @panel.init_fault)/
+      (@panel.runs * @panel.c_value * @panel.voltage)
+      @panel.m_value = 1/(1+@panel.f_value)
+      @panel.final_value = @panel.init_fault * @panel.m_value
     end
 
 
+    def c_val_picker(wire_size, wire_type, conduit_type, runs_type)
+      case wire_size
+      when "14"
+          if wire_type == 1 && conduit_type == 1 && runs_type == 1
+            return 389
+            elsif wire_type == 1 && conduit_type == 1 && runs_type == 2
+              return 389
+            elsif wire_type == 1 && conduit_type == 2 && runs_type == 1
+              return 389
+            elsif wire_type == 1 && conduit_type == 2 && runs_type == 2
+              return 389
+            elsif wire_type == 2 && conduit_type == 1 && runs_type == 1
+              return 237
+            elsif wire_type == 2 && conduit_type == 1 && runs_type == 2
+              return 237
+            elsif wire_type == 2 && conduit_type == 2 && runs_type == 1
+              return 237
+            elsif wire_type == 2 && conduit_type == 2 && runs_type == 2
+              return 237
+            end
+          when "12"
+           if wire_type == 1 && conduit_type == 1 && runs_type == 1
+            return 617
+          elsif wire_type == 1 && conduit_type == 1 && runs_type == 2
+            return 617
+          elsif wire_type == 1 && conduit_type == 2 && runs_type == 1
+            return 617
+          elsif wire_type == 1 && conduit_type == 2 && runs_type == 2
+            return 617
+          elsif wire_type == 2 && conduit_type == 1 && runs_type == 1
+            return 376
+          elsif wire_type == 2 && conduit_type == 1 && runs_type == 2
+            return 376
+          elsif wire_type == 2 && conduit_type == 2 && runs_type == 1
+            return 376
+          elsif wire_type == 2 && conduit_type == 2 && runs_type == 2
+            return 376
+          end
+        when "10"
+         if wire_type == 1 && conduit_type == 1 && runs_type == 1
+          return 981
+        elsif wire_type == 1 && conduit_type == 1 && runs_type == 2
+          return 982
+        elsif wire_type == 1 && conduit_type == 2 && runs_type == 1
+          return 982
+        elsif wire_type == 1 && conduit_type == 2 && runs_type == 2
+          return 982
+        elsif wire_type == 2 && conduit_type == 1 && runs_type == 1
+          return 599
+        elsif wire_type == 2 && conduit_type == 1 && runs_type == 2
+          return 599
+        elsif wire_type == 2 && conduit_type == 2 && runs_type == 1
+          return 599
+        elsif wire_type == 2 && conduit_type == 2 && runs_type == 2
+          return 599
+        end
+      when "8"
+       if wire_type == 1 && conduit_type == 1 && runs_type == 1
+        return 1557
+      elsif wire_type == 1 && conduit_type == 1 && runs_type == 2
+        return 1559
+      elsif wire_type == 1 && conduit_type == 2 && runs_type == 1
+        return 1559
+      elsif wire_type == 1 && conduit_type == 2 && runs_type == 2
+        return 1560
+      elsif wire_type == 2 && conduit_type == 1 && runs_type == 1
+        return 951
+      elsif wire_type == 2 && conduit_type == 1 && runs_type == 2
+        return 952
+      elsif wire_type == 2 && conduit_type == 2 && runs_type == 1
+        return 952
+      elsif wire_type == 2 && conduit_type == 2 && runs_type == 2
+        return 952
+      end
+    when "6"
+     if wire_type == 1 && conduit_type == 1 && runs_type == 1
+      return 2425
+    elsif wire_type == 1 && conduit_type == 1 && runs_type == 2
+      return 2431
+    elsif wire_type == 1 && conduit_type == 2 && runs_type == 1
+      return 2430
+    elsif wire_type == 1 && conduit_type == 2 && runs_type == 2
+      return 2433
+    elsif wire_type == 2 && conduit_type == 1 && runs_type == 1
+      return 1481
+    elsif wire_type == 2 && conduit_type == 1 && runs_type == 2
+      return 1482
+    elsif wire_type == 2 && conduit_type == 2 && runs_type == 1
+      return 1482
+    elsif wire_type == 2 && conduit_type == 2 && runs_type == 2
+      return 1482
+    end
+    when "4"
+     if wire_type == 1 && conduit_type == 1 && runs_type == 1
+      return 3806
+    elsif wire_type == 1 && conduit_type == 1 && runs_type == 2
+      return 3830
+    elsif wire_type == 1 && conduit_type == 2 && runs_type == 1
+      return 3826
+    elsif wire_type == 1 && conduit_type == 2 && runs_type == 2
+      return 3838
+    elsif wire_type == 2 && conduit_type == 1 && runs_type == 1
+      return 2346
+    elsif wire_type == 2 && conduit_type == 1 && runs_type == 2
+      return 2351
+    elsif wire_type == 2 && conduit_type == 2 && runs_type == 1
+      return 2350
+    elsif wire_type == 2 && conduit_type == 2 && runs_type == 2
+      return 2353
+    end
+  end
+end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def panel_params
       params.require(:panel).permit(:wire_length, :init_fault, :runs, :voltage, :c_value, :panel_name,
-        :f_value, :m_value, :final_value, :project_id, :position, :wire_type, :conduit_type, :runs_type)
+        :f_value, :m_value, :final_value, :project_id, :position, :wire_type, :conduit_type, :run_type,
+        :wire_size)
     end
-end
+  end
