@@ -28,6 +28,8 @@ class PanelsController < ApplicationController
   # GET /panels/1
   # GET /panels/1.json
   def show
+      @panel.c_value = c_val_picker(@panel.wire_size, @panel.wire_type, 
+          @panel.conduit_type, @panel.run_type)
   end
 
   # GET /panels/new
