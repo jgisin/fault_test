@@ -39,6 +39,7 @@ ActiveRecord::Schema.define(version: 20151005230816) do
   create_table "projects", force: :cascade do |t|
     t.string   "name"
     t.string   "notes"
+    t.float    "init_fault"
     t.integer  "position"
     t.integer  "user_id"
     t.datetime "created_at", null: false

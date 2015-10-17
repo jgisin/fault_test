@@ -1,79 +1,83 @@
 <% @page_title = "Panels Index" %>
 
 
-    <h1><%= @page_title %></h1>
-  </div>
+<h1><%= @page_title %></h1>
 </div>
 </div>
-<div class="container">
-<%= link_to "New Panel", {action: "new", project_id: @project.id}, class: "btn btn-md btn-success" %>
-<%= link_to "Back to Projects", {controller: "projects", action: "index",
- user_id: @project.user_id}, class: "btn btn-md btn-default" %>
 </div>
 <div class="container">
+  <%= link_to "New Panel", {action: "new", project_id: @project.id}, class: "btn btn-md btn-success" %>
+  <%= link_to "Back to Projects", {controller: "projects", action: "index",
+   user_id: @project.user_id}, class: "btn btn-md btn-default" %>
+ </div>
+ <div class="container">
   <div class="row">
-  <h2>Panel Values</h2>
-  <table class="table table-hover">
-    <thead>
-      <tr>
-        <th>Panel Name</th>
-        <th>Wire length</th>
-        <th>Init fault</th>
-        <th>Runs</th>
-        <th>Voltage</th>
-        <th>C value</th>
-        <th>Wire Size</th>
-        <th colspan="3"></th>
-    </tr>
-  </thead>
+    <div class="col-sm-11">
+      <h2>Panel Values</h2>
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>Panel Name</th>
+            <th>Wire length</th>
+            <th>Init fault</th>
+            <th>Runs</th>
+            <th>Voltage</th>
+            <th>C value</th>
+            <th>Wire Size</th>
+            <th colspan="3"></th>
+          </tr>
+        </thead>
 
-  <tbody>
-    <% @panels.each do |panel| %>
-      <tr>
-        <td><%= panel.panel_name %></td>
-        <td><%= panel.wire_length %></td>
-        <td><%= panel.init_fault %></td>
-        <td><%= panel.runs %></td>
-        <td><%= panel.voltage %></td>
-        <td><%= panel.c_value %></td>
-        <td><%= panel.wire_size %></td>
-        <td><%= link_to 'Show', panel, class: "btn btn-md btn-info" %></td>
-        <td><%= link_to 'Edit', edit_panel_path(panel), class: "btn btn-md btn-info" %></td>
-        <td><%= link_to 'Destroy', panel, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-md btn-info" %></td>
-      </tr>
+        <tbody>
+          <% @panels.each do |panel| %>
+          <tr>
+            <td><%= panel.panel_name %></td>
+            <td><%= panel.wire_length %></td>
+            <td><%= panel.init_fault %></td>
+            <td><%= panel.runs %></td>
+            <td><%= panel.voltage %></td>
+            <td><%= panel.c_value %></td>
+            <td><%= "##{panel.wire_size}" %></td>
+            <td><%= link_to 'Show', panel, class: "btn btn-md btn-info" %></td>
+            <td><%= link_to 'Edit', edit_panel_path(panel), class: "btn btn-md btn-info" %></td>
+            <td><%= link_to 'Destroy', panel, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-md btn-info" %></td>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+    <% if !flash[:notice].blank? %>
+    <div class="alert alert-danger fade in">
+      <%= flash[:notice] %>
+    </div>
     <% end %>
-  </tbody>
-</table>
-                <% if !flash[:notice].blank? %>
-                <div class="alert alert-danger fade in">
-                <%= flash[:notice] %>
-              </div>
-                <% end %>
-</div>
-<div class="row">
-<h2>Results</h2>
-<table class="table table-hover">
-  <thead>
-    <tr>
-      <th>Panel Name</th>
-      <th>F Value</th>
-      <th>M Value</th>
-      <th>Final Value</th>
-    </tr>
-  </thead>
+  </div>
+  <div class="row">
+    <div class="col-sm-7">
+      <h2>Results</h2>
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>Panel Name</th>
+            <th>F Value</th>
+            <th>M Value</th>
+            <th>Final Value</th>
+          </tr>
+        </thead>
 
-  <tbody>
-    <% @panels.each do |panel| %>
-      <tr>
-        <td><%= panel.panel_name %></td>
-        <td><%= number_with_precision(panel.f_value, precision: 2) %></td>
-        <td><%= number_with_precision(panel.m_value, precision: 2) %></td>
-        <td><%= number_with_precision(panel.final_value, precision: 2) %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-</div>
+        <tbody>
+          <% @panels.each do |panel| %>
+          <tr>
+            <td><%= panel.panel_name %></td>
+            <td><%= number_with_precision(panel.f_value, precision: 2) %></td>
+            <td><%= number_with_precision(panel.m_value, precision: 2) %></td>
+            <td><%= number_with_precision(panel.final_value, precision: 2) %></td>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>
 <br>
 
