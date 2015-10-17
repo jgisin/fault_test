@@ -24,9 +24,10 @@
     <%= f.text_field :wire_length %>
   </div>
   <div class="form-group">
-    <%= f.label :init_fault, "Initial Fault Value" %><br>
-    <%= f.text_field :init_fault %>
+    <%= f.label :fed_from %><br>
+    <%= f.select :fed_from, @panel_names %>
   </div>
+
   <div class="form-group">
     <%= f.label :runs %><br>
     <%= f.text_field :runs %>

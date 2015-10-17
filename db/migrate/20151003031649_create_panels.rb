@@ -6,6 +6,7 @@ class CreatePanels < ActiveRecord::Migration
       t.integer :position
       t.float :wire_length
       t.float :init_fault
+      t.string :fed_from
       t.float :runs
       t.float :voltage
       t.string :wire_size

@@ -4,23 +4,31 @@ class PanelsController < ApplicationController
   before_action :confirm_logged_in
   before_action :set_panel, only: [:show, :edit, :update, :destroy]
 
+
   # GET /panels
   # GET /panels.json
   def index
     @panels = @project.panels.sorted
     @panels.each do |panel|
       panel.c_value = c_val_picker(panel.wire_size, panel.wire_type, 
-          panel.conduit_type, panel.run_type)
-      if panel.voltage == 208 || panel.voltage == 480
-        panel.f_value = (1.73 * panel.wire_length * panel.init_fault)/
-        (panel.runs * panel.c_value * panel.voltage)
-        panel.m_value = 1/(1+panel.f_value)
-        panel.final_value = panel.init_fault * panel.m_value
-      else
-        panel.f_value = (2 * panel.wire_length * panel.init_fault)/
-        (panel.runs * panel.c_value * panel.voltage)
-        panel.m_value = 1/(1+panel.f_value)
-        panel.final_value = panel.init_fault * panel.m_value
+      panel.conduit_type, panel.run_type)
+      if panel.init_fault == nil || panel.init_fault != @project.init_fault
+        panel.init_fault = init_fault_picker(panel.fed_from)
+      end
+      if panel.final_value != nil
+        if panel.voltage == 208 || panel.voltage == 480
+          panel.f_value = (1.73 * panel.wire_length * init_fault_picker(panel.fed_from))/
+          (panel.runs * panel.c_value * panel.voltage)
+          panel.m_value = 1/(1+panel.f_value)
+          panel.final_value = panel.init_fault * panel.m_value
+          panel.save
+        else
+          panel.f_value = (2 * panel.wire_length * panel.init_fault)/
+          (panel.runs * panel.c_value * panel.voltage)
+          panel.m_value = 1/(1+panel.f_value)
+          panel.final_value = init_fault_picker(panel.fed_from) * panel.m_value
+          panel.save
+        end
       end
     end
   end
@@ -30,17 +38,25 @@ class PanelsController < ApplicationController
   def show
       @panel.c_value = c_val_picker(@panel.wire_size, @panel.wire_type, 
           @panel.conduit_type, @panel.run_type)
+        if @panel.voltage == 208 || @panel.voltage == 480
+          panel_calcs(1.73)
+        else
+          panel_calcs(2)
+        end
   end
 
   # GET /panels/new
   def new
     @panel = Panel.new({:project_id => @project.id})
     @panel_count = Panel.count + 1
+    @panel_names = Panel.where(:project_id => @project.id).pluck(:panel_name)
+    @panel_names.insert(0, "Transformer")
   end
 
   # GET /panels/1/edit
   def edit
     @panel_count = Panel.count
+    @panel_names = Panel.where(:project_id => @panel.project_id).pluck(:panel_name)
   end
 
   # POST /panels
@@ -48,6 +64,7 @@ class PanelsController < ApplicationController
   def create
     @panel = Panel.new(panel_params)
     @panel_count = Panel.count
+     @panel_names = Panel.where(:project_id => @panel.project_id).pluck(:panel_name)
     @panel.c_value = c_val_picker(@panel.wire_size, @panel.wire_type, 
           @panel.conduit_type, @panel.run_type)
     respond_to do |format|
@@ -90,6 +107,7 @@ class PanelsController < ApplicationController
   # DELETE /panels/1.json
   def destroy
     @panel.destroy
+    Panel.where(:fed_from => @panel.panel_name).destroy(Panel.where(:fed_from => @panel.panel_name).pluck(:id))
     flash[:notice] = "Panel '#{@panel.panel_name}' has been destroyed successfully"
     redirect_to(:action => 'index', :project_id => @panel.project_id)
   end
@@ -101,12 +119,28 @@ class PanelsController < ApplicationController
     end
 
     def panel_calcs(var_volt)
-      @panel.f_value = (var_volt * @panel.wire_length * @panel.init_fault)/
+      @panel.f_value = (var_volt * @panel.wire_length * init_fault_picker(@panel.fed_from))/
       (@panel.runs * @panel.c_value * @panel.voltage)
       @panel.m_value = 1/(1+@panel.f_value)
-      @panel.final_value = @panel.init_fault * @panel.m_value
+      @panel.final_value = init_fault_picker(@panel.fed_from) * @panel.m_value
+      @panel.save
     end
 
+    def init_fault_picker(fed_from)
+        if fed_from != "Transformer"
+          if defined? @project.id
+            return Panel.where(:panel_name => fed_from, :project_id => @project.id).pluck(:final_value)[0]
+          else
+            return Panel.where(:panel_name => fed_from, :project_id => @panel.project_id).pluck(:final_value)[0]
+          end
+        else
+          if defined? @panel
+            return Project.where(:id => @panel.project_id).pluck(:init_fault)[0]
+          else
+            return Project.where(:id => @project.id).pluck(:init_fault)[0]
+          end
+        end
+    end
 
     def c_val_picker(wire_size, wire_type, conduit_type, runs_type)
       case wire_size
@@ -495,6 +529,6 @@ end
     def panel_params
       params.require(:panel).permit(:wire_length, :init_fault, :runs, :voltage, :c_value, :panel_name,
         :f_value, :m_value, :final_value, :project_id, :position, :wire_type, :conduit_type, :run_type,
-        :wire_size)
+        :wire_size, :fed_from)
     end
   end
