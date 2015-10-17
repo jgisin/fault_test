@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :confirm_logged_in, except: [:new, :create]
 
   # GET /users
   # GET /users.json
@@ -29,8 +30,10 @@ class UsersController < ApplicationController
     flash[:notice] = "User #{@user.user_name} has been created successfully"
     redirect_to(:controller => 'projects', :action => 'index', :user_id => @user.id)
       else
-    redirect_to(:controller => 'users', :action => 'new')
-
+        respond_to do |format|
+        format.html { render :new }
+        format.json { render json: @user.errors, status: :unprocessable_entity }
+      end
       end
   end
 
@@ -66,6 +69,6 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:user_name, :password_digest, :password)
+      params.require(:user).permit(:user_name, :password_digest, :password, :email)
     end
 end

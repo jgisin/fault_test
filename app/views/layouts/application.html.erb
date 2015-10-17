@@ -10,7 +10,8 @@
     <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
-          <p class="navbar-text"><b></b></p>
+          <p class="navbar-text"><b><%= link_to "Electrical Calcs", {controller: "access", action: "index"},
+          class: "navbar-brand" %></b></p>
         </div>
                 <div id="navbar" class="navbar-collapse collapse">
                   <form class="navbar-form navbar-right">
@@ -30,8 +31,10 @@
     	<br>
 <%= yield %>
 
-	<div id="footer">
-		<!-- <p id="copyright">&copy; jgisin.com / Jeff Gisin</p> -->
-	</div>
+	<footer class="footer">
+    <div class="container">
+		<p class="text-muted"><!--&copy; jgisin.com / Jeff Gisin--></p> 
+	 </div>
+  </footer>
 </body>
 </html>

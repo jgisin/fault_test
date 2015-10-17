@@ -1,6 +1,6 @@
 <%= form_for(@project) do |f| %>
   <% if @project.errors.any? %>
-    <div id="error_explanation">
+    <div class="alert alert-danger">
       <h2><%= pluralize(@project.errors.count, "error") %> prohibited this project from being saved:</h2>
 
       <ul>
@@ -26,8 +26,7 @@
   <div class="row">
       <div class="col-sm-4">
       <div class="form-group">
-        <%= f.label :user_id %><br>
-       <%= f.select :user_id, User.all.map {|p| [p.user_name, p.id]}, {}, {class: "form-control"}  %>
+        <%= f.hidden_field :user_id, :value => @project.user_id %>
       </div>
       <div class="form-group">
         <%= f.label :position %><br>

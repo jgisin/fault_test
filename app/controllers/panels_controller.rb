@@ -47,13 +47,9 @@ class PanelsController < ApplicationController
   # POST /panels.json
   def create
     @panel = Panel.new(panel_params)
+    @panel_count = Panel.count
     @panel.c_value = c_val_picker(@panel.wire_size, @panel.wire_type, 
           @panel.conduit_type, @panel.run_type)
-    if @panel.voltage == 208 || @panel.voltage == 480
-      panel_calcs(1.73)
-    else
-      panel_calcs(2)
-    end
     respond_to do |format|
       if @panel.save
         format.html { redirect_to @panel, notice: 'Panel was successfully created.'}

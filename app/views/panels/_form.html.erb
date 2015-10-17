@@ -1,7 +1,7 @@
 
 <%= form_for @panel, :html => {:class => "form-horizontal center"} do |f| %>
   <% if @panel.errors.any? %>
-    <div id="error_explanation">
+    <div class="alert alert-danger">
       <h2><%= pluralize(@panel.errors.count, "error") %> prohibited this panel from being saved:</h2>
 
       <ul>

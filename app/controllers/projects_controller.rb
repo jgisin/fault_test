@@ -29,6 +29,7 @@ class ProjectsController < ApplicationController
   # POST /projects.json
   def create
     @project = Project.new(project_params)
+    @project_count = Project.count
 
     respond_to do |format|
       if @project.save
