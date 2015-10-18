@@ -21,13 +21,11 @@ class PanelsController < ApplicationController
           (panel.runs * panel.c_value * panel.voltage)
           panel.m_value = 1/(1+panel.f_value)
           panel.final_value = panel.init_fault * panel.m_value
-          panel.save
         else
           panel.f_value = (2 * panel.wire_length * panel.init_fault)/
           (panel.runs * panel.c_value * panel.voltage)
           panel.m_value = 1/(1+panel.f_value)
           panel.final_value = init_fault_picker(panel.fed_from) * panel.m_value
-          panel.save
         end
       end
     end
@@ -36,6 +34,7 @@ class PanelsController < ApplicationController
   # GET /panels/1
   # GET /panels/1.json
   def show
+      @panel.init_fault = init_fault_picker(@panel.fed_from)
       @panel.c_value = c_val_picker(@panel.wire_size, @panel.wire_type, 
           @panel.conduit_type, @panel.run_type)
         if @panel.voltage == 208 || @panel.voltage == 480
@@ -57,6 +56,7 @@ class PanelsController < ApplicationController
   def edit
     @panel_count = Panel.count
     @panel_names = Panel.where(:project_id => @panel.project_id).pluck(:panel_name)
+    @panel_names.insert(0, "Transformer")
   end
 
   # POST /panels
@@ -87,11 +87,6 @@ class PanelsController < ApplicationController
       if @panel.update(panel_params)
           @panel.c_value = c_val_picker(@panel.wire_size, @panel.wire_type, 
           @panel.conduit_type, @panel.run_type)
-        if @panel.voltage == 208 || @panel.voltage == 480
-          panel_calcs(1.73)
-        else
-          panel_calcs(2)
-        end
         format.html { redirect_to @panel, notice: 'Panel was successfully updated.' }
         format.json { render :show, status: :ok, location: @panel }
       else
