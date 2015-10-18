@@ -9,7 +9,13 @@ class PanelsController < ApplicationController
   # GET /panels.json
   def index
     @panels = @project.panels.sorted
+
     @panels.each do |panel|
+    if Panel.where(:fed_from => panel.panel_name).pluck(:panel_name).length > 0
+    @panel_del = "Will also destroy #{Panel.where(:fed_from => panel.panel_name).pluck(:panel_name).join(', ')}"
+    else
+      @panel_del = "This will delete #{panel.panel_name}"
+    end
       panel.c_value = c_val_picker(panel.wire_size, panel.wire_type, 
       panel.conduit_type, panel.run_type)
       if panel.init_fault == nil || panel.init_fault != @project.init_fault

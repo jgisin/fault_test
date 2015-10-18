@@ -34,7 +34,7 @@
           <tr>
             <td><%= panel.position %></td>
             <td><%= panel.panel_name %></td>
-            <td><%= panel.wire_length %></td>
+            <td><%= "#{panel.wire_length.to_i}'" %></td>
             <td><%= number_with_precision(panel.init_fault, precision: 2) %></td>
             <td><%= panel.runs.to_i %></td>
             <td><%= panel.voltage.to_i %></td>
@@ -42,7 +42,7 @@
             <td><%= "##{panel.wire_size}" %></td>
             <td><%= link_to 'Show', panel, class: "btn btn-md btn-info" %></td>
             <td><%= link_to 'Edit', edit_panel_path(panel), class: "btn btn-md btn-info" %></td>
-            <td><%= link_to 'Destroy', panel, method: :delete, data: { confirm: "Will also destroy #{Panel.where(:fed_from => panel.panel_name).pluck(:panel_name)}" }, class: "btn btn-md btn-info" %></td>
+            <td><%= link_to 'Destroy', panel, method: :delete, data: { confirm: "Will destroy: #{panel.panel_name} | #{Panel.where(:fed_from => panel.panel_name).pluck(:panel_name).join(', ')}. Are you sure?"}, class: "btn btn-md btn-info" %></td>
           </tr>
           <% end %>
         </tbody>

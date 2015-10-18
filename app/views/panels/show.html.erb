@@ -4,7 +4,11 @@
   </div>
 </div>
 </div>
-<p class="alert alert-success"><%= notice %></p>
+      <% if !flash[:notice].blank? %>
+    <div class="alert alert-danger fade in">
+      <%= flash[:notice] %>
+    </div>
+    <% end %>
 <div class="container">
 <p>
   <strong>Panel Name:</strong>
